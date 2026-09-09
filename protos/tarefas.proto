@@ -17,7 +17,7 @@ service GerenciarCompras{
     rpc DeletarItem (DeletaItem) returns (Deletar)
 }
 
-//Aqui é a estrutura que representa o item
+//Aqui é a estrutura que representa o item - Usado pelo Servidor -
 //A tag é usada por causa da forma que a comunicação é feita com o Protobuf
 //Protobuf em vez de enviar palavras, envia apenas a tag/identificador
 //Cliente envia Tag1"A12" Tag2"Arroz" Tag3"5"
@@ -44,3 +44,33 @@ message AdicionarItem{
 
 //Quem cria o ID é o servidor 
 //Cliente envia apenas as informações
+
+//menssagem vazia para exibir requisição para listar
+message ListarItem{
+}
+
+//Mensagem devolvida pelo servidor 
+//repeated significa que é uma lista
+message ListarItemResp{
+    repeated ItemCompra itens = 1;
+}
+
+//Mensagem que o cliente envia para alterar item
+
+message AtualizarItens{
+    string id = 1;
+
+    string nome = 2;
+
+    int32 quantidade = 3;
+}
+
+//Mensagem que o cliente envia para remover item
+message DeletaItem{
+    string id = 1;
+}
+
+//mensagem de resposta depois de remover
+message DeletarItemResp{
+    string mensagem = 1;
+}
