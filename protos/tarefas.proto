@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package comprar;
+
+
+//CRUD pedido pelo professor
+//Aqui ficam os serviços remotos que o cliente pode chamar
+//São metodos que recebem dados e retornam o que foi cadastrado
+//Estrutura "rpc -nome do metodo- (função) returns(funçãoRetorno)   
+service GerenciarCompras{
+    rpc AdicionarItem (AdicionarItem) returns (Adicionar);
+
+    rpc ListarItens (ListarItens) returns (Listar); 
+
+    rpc AtualizarLista (AtualizarItens) returns (Atualizar)
+
+    rpc DeletarItem (DeletaItem) returns (Deletar)
+}
+
+//Aqui é a estrutura que representa o item
+//A tag é usada por causa da forma que a comunicação é feita com o Protobuf
+//Protobuf em vez de enviar palavras, envia apenas a tag/identificador
+//Cliente envia Tag1"A12" Tag2"Arroz" Tag3"5"
+//Servidor destricha acessando o .proto - Tag1 é o ID então armazena "A12", Tag2 é o nome então armazena "Arroz" ... -
+//Assim a comunicação é mais rápida
+message AdicionarItem{
+
+    string id = 1;
+    //identificador e a tag
+
+    string nome = 2;
+    //nome do item e a tag
+
+    int32 quantidade = 3;
+    //quantidade enviada e a tag
+} 
+
+//mensagem que o cliente envia para Criar item
+message AdicionarItem{
+    string nome = 1;
+
+    int32 quantidade = 2;
+}
+
+//Quem cria o ID é o servidor 
+//Cliente envia apenas as informações
