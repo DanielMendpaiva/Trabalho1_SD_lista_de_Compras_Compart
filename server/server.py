@@ -13,8 +13,6 @@ os.makedirs(PASTA, exist_ok=True)
 def novo_id():
     return os.urandom(16).hex()
 
-
-# grpc precisa de um executor com interface parecida com a do
 class Futuro:
     def __init__(self):
         self.cond = threading.Condition()

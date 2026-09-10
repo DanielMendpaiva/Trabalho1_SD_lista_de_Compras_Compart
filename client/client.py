@@ -31,7 +31,7 @@ def main():
             desc = input("Descricao: ")
             status = input("Status: ")
             prazo = input("Prazo: ")
-            resp = input("Responsaveis (separados por virgula): ")
+            resp = input("Responsaveis (separados virgula): ")
             t = stub.CriarTarefa(tarefas_pb2.CriarTarefaRequest(titulo=titulo, descricao=desc, status=status,data_limite=prazo, responsaveis=resp.split(",")))
             imprimir(t)
 
