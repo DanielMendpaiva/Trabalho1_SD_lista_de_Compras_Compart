@@ -1,0 +1,20 @@
+version: '3'
+
+# Lista todos os servicos que vao rodar juntos
+services:
+  # Servico do servidor gRPC
+  servidor:
+    # Pasta onde esta o Dockerfile do servidor para gerar a imagem
+    build: ./server
+
+  # Servico do cliente gRPC
+  cliente:
+    # Pasta onde esta o Dockerfile do cliente para gerar a imagem
+    build: ./client
+    # Mantem o canal de entrada aberto para o Python aceitar texto digitado via input()
+    stdin_open: true
+    # Habilita o terminal iterativo (terminal tty) para podermos digitar opcoes na tela
+    tty: true
+    # Garante que o cliente so tente rodar depois que o servidor estiver ligado
+    depends_on:
+      - servidor

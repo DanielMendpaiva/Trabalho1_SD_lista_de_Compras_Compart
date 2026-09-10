@@ -1,3 +1,5 @@
+//.proto é o "contrato" de comunicação do gRPC usando liguagem de Protocol Buffers
+
 syntax = "proto3";
 
 package comprar;
