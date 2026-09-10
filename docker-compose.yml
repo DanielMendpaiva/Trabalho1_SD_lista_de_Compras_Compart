@@ -1,20 +1,36 @@
-version: '3'
-
-# Lista todos os servicos que vao rodar juntos
 services:
-  # Servico do servidor gRPC
   servidor:
-    # Pasta onde esta o Dockerfile do servidor para gerar a imagem
     build: ./server
+    networks:
+      rede_tarefas:
+        ipv4_address: 172.25.0.10
 
-  # Servico do cliente gRPC
-  cliente:
-    # Pasta onde esta o Dockerfile do cliente para gerar a imagem
+  cliente1:
     build: ./client
-    # Mantem o canal de entrada aberto para o Python aceitar texto digitado via input()
+    environment:
+      - SERVIDOR_ENDERECO=172.25.0.10:50051
+    networks:
+      rede_tarefas:
+        ipv4_address: 172.25.0.11
     stdin_open: true
-    # Habilita o terminal iterativo (terminal tty) para podermos digitar opcoes na tela
     tty: true
-    # Garante que o cliente so tente rodar depois que o servidor estiver ligado
     depends_on:
       - servidor
+
+  cliente2:
+    build: ./client
+    environment:
+      - SERVIDOR_ENDERECO=172.25.0.10:50051
+    networks:
+      rede_tarefas:
+        ipv4_address: 172.25.0.12
+    stdin_open: true
+    tty: true
+    depends_on:
+      - servidor
+
+networks:
+  rede_tarefas:
+    ipam:
+      config:
+        - subnet: 172.25.0.0/24
