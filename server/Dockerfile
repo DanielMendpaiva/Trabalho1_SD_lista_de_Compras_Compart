@@ -10,5 +10,4 @@ COPY . .
 # Instala as bibliotecas necessarias listadas no requirements do cliente
 RUN pip install -r requirements.txt
 
-# Inicia o client.py com a flag -u para exibir prints no terminal sem travar no buffer
-CMD ["python", "-u", "client.py"]
+CMD ["python", "-u", "server.py"]

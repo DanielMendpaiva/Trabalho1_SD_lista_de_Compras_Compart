@@ -10,5 +10,4 @@ COPY . .
 # Executa o instalador de pacotes dentro do container para baixar as dependencias
 RUN pip install -r requirements.txt
 
-# Comando executado automaticamente quando o container liga, iniciando o servidor
-CMD ["python", "server.py"]
+CMD ["python", "client.py"]

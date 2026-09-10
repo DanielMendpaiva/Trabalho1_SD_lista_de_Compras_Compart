@@ -1,77 +1,42 @@
-//.proto é o "contrato" de comunicação do gRPC usando liguagem de Protocol Buffers
-
 syntax = "proto3";
 
-package comprar;
+package tarefas;
 
-
-//CRUD pedido pelo professor
-//Aqui ficam os serviços remotos que o cliente pode chamar
-//São metodos que recebem dados e retornam o que foi cadastrado
-//Estrutura "rpc -nome do metodo- (função) returns(funçãoRetorno)   
-service GerenciarCompras{
-    rpc AdicionarItem (CriarItem) returns (Atualizar);
-
-    rpc ListarItens (ListarItem) returns (Listar); 
-
-    rpc AtualizarLista (AtualizarItem) returns (Atualizar);
-
-    rpc DeletarItem (DeletaItem) returns (Deletar);
+service TarefaService {
+  rpc CriarTarefa (CriarTarefaRequest) returns (Tarefa);
+  rpc ListarTarefas (Vazio) returns (ListaTarefas);
+  rpc AtualizarTarefa (Tarefa) returns (Tarefa);
+  rpc DeletarTarefa (DeletarTarefaRequest) returns (DeletarTarefaResponse);
 }
 
-//Aqui é a estrutura que representa o item - Usado pelo Servidor -
-//A tag é usada por causa da forma que a comunicação é feita com o Protobuf
-//Protobuf em vez de enviar palavras, envia apenas a tag/identificador
-//Cliente envia Tag1"A12" Tag2"Arroz" Tag3"5"
-//Servidor destricha acessando o .proto - Tag1 é o ID então armazena "A12", Tag2 é o nome então armazena "Arroz" ... -
-//Assim a comunicação é mais rápida
-
-message Atualizar{
-
-    string id = 1;
-
-    string nome = 2;
-
-    int32 quantidade = 3;
-} 
-
-//mensagem que o cliente envia para Criar item
-message CriarItem{
-    string nome = 1;
-
-    int32 quantidade = 2;
+message Tarefa {
+  string id = 1;
+  string titulo = 2;
+  string descricao = 3;
+  string status = 4;
+  string data_limite = 5;
+  repeated string responsaveis = 6;
 }
 
-//Quem cria o ID é o servidor 
-//Cliente envia apenas as informações
-
-//menssagem vazia para exibir requisição para listar
-message ListarItem{
+message CriarTarefaRequest {
+  string titulo = 1;
+  string descricao = 2;
+  string status = 3;
+  string data_limite = 4;
+  repeated string responsaveis = 5;
 }
 
-//Mensagem devolvida pelo servidor 
-//repeated significa que é uma lista
+message Vazio {}
 
-message Listar{
-    repeated Atualizar itens = 1;
+message ListaTarefas {
+  repeated Tarefa tarefas = 1;
 }
 
-//Mensagem que o cliente envia para alterar item
-
-message AtualizarItem{
-    string id = 1;
-
-    string nome = 2;
-
-    int32 quantidade = 3;
+message DeletarTarefaRequest {
+  string id = 1;
 }
 
-//Mensagem que o cliente envia para remover item
-message DeletaItem{
-    string id = 1;
-}
-
-//mensagem de resposta depois de remover
-message Deletar{
-    string mensagem = 1;
+message DeletarTarefaResponse {
+  bool sucesso = 1;
+  string mensagem = 2;
 }
