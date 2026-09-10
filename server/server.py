@@ -15,7 +15,6 @@ def novo_id():
 
 
 # grpc precisa de um executor com interface parecida com a do
-# concurrent.futures, entao foi feita essa versao simples na mao
 class Futuro:
     def __init__(self):
         self.cond = threading.Condition()

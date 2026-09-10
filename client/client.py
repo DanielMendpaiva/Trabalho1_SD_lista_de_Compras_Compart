@@ -11,7 +11,7 @@ def imprimir(t):
     print(f" Prazo: {t.data_limite} | Responsaveis: {', '.join(t.responsaveis)}")
 
 def menu():
-    print("\nGERENCIADOR DE TAREFAS:")
+    print("\nGERENCIADOR DE COMPRAS:")
     print("1. Criar Tarefa")
     print("2. Listar Tarefas")
     print("3. Atualizar Tarefa")
@@ -32,9 +32,7 @@ def main():
             status = input("Status: ")
             prazo = input("Prazo: ")
             resp = input("Responsaveis (separados por virgula): ")
-            t = stub.CriarTarefa(tarefas_pb2.CriarTarefaRequest(
-                titulo=titulo, descricao=desc, status=status,
-                data_limite=prazo, responsaveis=resp.split(",")))
+            t = stub.CriarTarefa(tarefas_pb2.CriarTarefaRequest(titulo=titulo, descricao=desc, status=status,data_limite=prazo, responsaveis=resp.split(",")))
             imprimir(t)
 
         elif opcao == "2":
@@ -51,7 +49,9 @@ def main():
             status = input("Novo Status: ")
             prazo = input("Novo Prazo: ")
             resp = input("Novos Responsaveis (separados por virgula): ")
-            t = stub.AtualizarTarefa(tarefas_pb2.Tarefa(id=id_tarefa, titulo=titulo, descricao=desc, status=status, data_limite=prazo, responsaveis=resp.split(",")))
+            t = stub.AtualizarTarefa(tarefas_pb2.Tarefa(
+                id=id_tarefa, titulo=titulo, descricao=desc, status=status,
+                data_limite=prazo, responsaveis=resp.split(",")))
             imprimir(t)
 
         elif opcao == "4":
