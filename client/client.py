@@ -7,11 +7,11 @@ ENDERECO = os.environ.get("SERVIDOR_ENDERECO", "localhost:50051")
 
 def imprimir(t):
     print(f"\n[{t.id}] {t.titulo} - {t.status}")
-    print(f"   Descricao: {t.descricao}")
-    print(f"   Prazo: {t.data_limite} | Responsaveis: {', '.join(t.responsaveis)}")
+    print(f" Descricao: {t.descricao}")
+    print(f" Prazo: {t.data_limite} | Responsaveis: {', '.join(t.responsaveis)}")
 
 def menu():
-    print("\n--- GERENCIADOR DE TAREFAS (gRPC) ---")
+    print("\nGERENCIADOR DE TAREFAS:")
     print("1. Criar Tarefa")
     print("2. Listar Tarefas")
     print("3. Atualizar Tarefa")
@@ -51,9 +51,7 @@ def main():
             status = input("Novo Status: ")
             prazo = input("Novo Prazo: ")
             resp = input("Novos Responsaveis (separados por virgula): ")
-            t = stub.AtualizarTarefa(tarefas_pb2.Tarefa(
-                id=id_tarefa, titulo=titulo, descricao=desc, status=status,
-                data_limite=prazo, responsaveis=resp.split(",")))
+            t = stub.AtualizarTarefa(tarefas_pb2.Tarefa(id=id_tarefa, titulo=titulo, descricao=desc, status=status, data_limite=prazo, responsaveis=resp.split(",")))
             imprimir(t)
 
         elif opcao == "4":
